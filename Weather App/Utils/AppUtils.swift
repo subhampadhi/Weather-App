@@ -21,6 +21,10 @@ class AppUtils {
         
     }
     
+    static func getURLForIcons(icon: String) -> String {
+        return "https://openweathermap.org/img/wn/\(icon)@2x.png"
+    }
+    
     static func showAlert(title: String, message: String, presenter: UIViewController) {
         // create the alert
         let alert = UIAlertController(title: "\(title)", message: "\(message)", preferredStyle: UIAlertController.Style.alert)
@@ -92,4 +96,13 @@ class AppUtils {
         let specialresult = texttest.evaluate(with: password)
         return specialresult
     }
+    
+    static func showActivityIndicator() {
+        print("Loading")
+    }
+    
+    static func hideActivityIndicator() {
+        print("Done Loading")
+    }
 }
+

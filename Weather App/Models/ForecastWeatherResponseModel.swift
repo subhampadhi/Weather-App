@@ -10,15 +10,23 @@ import Foundation
 import Realm
 import RealmSwift
 
-@objcMembers class ForecastWeatherBase : Object , Decodable {
+@objcMembers class ForecastWeatherBase : RealmSwift.Object , Decodable {
     
     dynamic var cod : String = ""
     dynamic var message : Double = 0.0
     dynamic var city : ForecastCity?
     dynamic var cnt : Int = 0
     let list = RealmSwift.List<ForecastList>()
+    dynamic var id = ""
     
-
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    convenience init(city: ForecastCity?) {
+        self.init()
+        self.city = city
+    }
     
     enum CodingKeys: String, CodingKey {
         case city = "city"
@@ -27,20 +35,19 @@ import RealmSwift
         case list = "list"
         case message = "message"
     }
-    
-    override static func primaryKey() -> String {
-        return "cnt"
-    }
-    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         cod = try values.decode(String.self, forKey: .cod)
         message = try values.decode(Double.self, forKey: .message)
         city = try values.decodeIfPresent(ForecastCity.self, forKey: .city)
         cnt = try values.decode(Int.self, forKey: .cnt)
-        
-        if let weatherList = try? values.decode([ForecastList].self, forKey: .list){
-            list.append(objectsIn: weatherList)
+        do {
+            let weatherList = try values.decode([ForecastList].self, forKey: .list)
+            for w in weatherList {
+                list.append(w)
+            }
+        } catch (let error) {
+            print(error)
         }
         super.init()
     }
@@ -60,37 +67,41 @@ import RealmSwift
 
 @objcMembers class ForecastList : Object , Decodable {
     
-    dynamic var clouds : ForecastCloud?
-    dynamic var dt : Int = 0
-    dynamic var  dtTxt : String = ""
-    dynamic var main : ForecastMain?
-    dynamic var rain : ForecastRain?
-    dynamic var sys : ForecastSy?
-    let weather = RealmSwift.List<ForecastWeather>()
-    dynamic var wind : ForecastWind?
+    dynamic var clouds : ForecastCloud? // ch
+    dynamic var dt : Int = 0 // ch
+    dynamic var  dtTxt : String = "" //ch
+    dynamic var main : ForecastMain? // ch
+   // dynamic var rain : ForecastRain?
+    dynamic var sys : ForecastSy? //ch
+    let weather = RealmSwift.List<ForecastWeather>() // ch
+    dynamic var wind : ForecastWind? // ch
     
     enum CodingKeys: String, CodingKey {
         case dt = "dt"
         case clouds = "clouds"
         case dtTxt = "dt_txt"
         case main = "main"
-        case rain = "rain"
+      //  case rain = "rain"
         case sys = "sys"
         case weather = "weather"
         case wind = "wind"
     }
     
-    override static func primaryKey() -> String {
-        return "dt"
+    convenience init(clouds: ForecastCloud?, main: ForecastMain?, sys: ForecastSy?, wind: ForecastWind?) {
+        self.init()
+        self.clouds = clouds
+        self.main = main
+        self.sys = sys
+        self.wind = wind
     }
     
-    required init(from decoder: Decoder) throws {
+    required  init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         clouds = try values.decodeIfPresent(ForecastCloud.self, forKey: .clouds)
         dt = try values.decode(Int.self, forKey: .dt)
         dtTxt = try values.decode(String.self, forKey: .dtTxt)
         main = try values.decodeIfPresent(ForecastMain.self, forKey: .main)
-        rain = try values.decodeIfPresent(ForecastRain.self, forKey: .rain)
+      //  rain = try values.decodeIfPresent(ForecastRain.self, forKey: .rain)
         sys = try values.decodeIfPresent(ForecastSy.self, forKey: .sys)
         wind = try values.decodeIfPresent(ForecastWind.self, forKey: .wind)
         
@@ -101,10 +112,12 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
+        super.init(value: value, schema: schema)
         fatalError("init(value:schema:) has not been implemented")
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
+        super.init(realm: realm, schema: schema)
         fatalError("init(realm:schema:) has not been implemented")
     }
     
@@ -158,10 +171,6 @@ import RealmSwift
         case main = "main"
     }
     
-    override static func primaryKey() -> String {
-        return "id"
-    }
-    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         descriptionField = try values.decode(String.self, forKey: .descriptionField)
@@ -191,10 +200,6 @@ import RealmSwift
     
     enum CodingKeys: String, CodingKey {
         case pod = "pod"
-    }
-    
-    override static func primaryKey() -> String {
-        return "pod"
     }
     
     required init(from decoder: Decoder) throws {
@@ -252,7 +257,7 @@ import RealmSwift
     dynamic var pressure : Double = 0.0
     dynamic var seaLevel : Double = 0.0
     dynamic var temp : Double = 0.0
-    dynamic var tempKf : Int = 0
+    dynamic var tempKf : Double = 0
     dynamic var tempMax : Double = 0.0
     dynamic var tempMin : Double = 0.0
     
@@ -274,7 +279,7 @@ import RealmSwift
         pressure = try values.decode(Double.self, forKey: .pressure)
         seaLevel = try values.decode(Double.self, forKey: .seaLevel)
         temp = try values.decode(Double.self, forKey: .temp)
-        tempKf = try values.decode(Int.self, forKey: .tempKf)
+        tempKf = try values.decode(Double.self, forKey: .tempKf)
         tempMax = try values.decode(Double.self, forKey: .tempMax)
         tempMin = try values.decode(Double.self, forKey: .tempMin)
         super.init()
@@ -301,10 +306,6 @@ import RealmSwift
     
     enum CodingKeys: String, CodingKey {
         case all = "all"
-    }
-    
-    override static func primaryKey() -> String {
-        return "all"
     }
     
     required init(from decoder: Decoder) throws {
@@ -349,6 +350,11 @@ import RealmSwift
         return "id"
     }
     
+    convenience init(coord: ForecastCoord?) {
+        self.init()
+        self.coord = coord
+    }
+    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         coord = try values.decodeIfPresent(ForecastCoord.self, forKey: .coord)
@@ -371,8 +377,6 @@ import RealmSwift
     required init() {
         super.init()
     }
-    
-    
 }
 
 @objcMembers class ForecastCoord : Object , Decodable {
@@ -403,6 +407,5 @@ import RealmSwift
     required init() {
         super.init()
     }
-    
 }
 

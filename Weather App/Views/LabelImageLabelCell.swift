@@ -44,7 +44,6 @@ class LabelImageLabelCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         label.numberOfLines = 0
-//        label.setLineSpacing(lineSpacing: 2)
         return label
     }()
     

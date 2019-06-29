@@ -65,7 +65,7 @@ extension SelectCityVC {
             AppUtils.showAlert(title: "Well !!", message: "Place don't have numbers or special characters I guess . I may be wrong though ", presenter: self)
             return
         }
-        vm.getTodayWeather(place: placeTextField.text!)
+        vm.callBothWeatherAPI(place: placeTextField.text!, vc: self)
     }
     
     func addKeyboardNotifications() {
@@ -89,6 +89,6 @@ extension SelectCityVC {
             AppUtils.showAlert(title: "Oops", message: "We guess there is no city as such", presenter: self)
         }
     }
-}
 
+}
 
