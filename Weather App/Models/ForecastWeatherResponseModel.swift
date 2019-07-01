@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 
 @objcMembers class ForecastWeatherBase : RealmSwift.Object , Decodable {
-    
+
     dynamic var cod : String = ""
     dynamic var message : Double = 0.0
     dynamic var city : ForecastCity?
@@ -53,11 +53,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -95,6 +95,7 @@ import RealmSwift
         self.wind = wind
     }
     
+
     required  init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         clouds = try values.decodeIfPresent(ForecastCloud.self, forKey: .clouds)
@@ -111,14 +112,14 @@ import RealmSwift
         super.init()
     }
     
+    
     required init(value: Any, schema: RLMSchema) {
         super.init(value: value, schema: schema)
-        fatalError("init(value:schema:) has not been implemented")
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
         super.init(realm: realm, schema: schema)
-        fatalError("init(realm:schema:) has not been implemented")
+        
     }
     
     required init() {
@@ -130,6 +131,12 @@ import RealmSwift
     
     dynamic var deg : Double = 0.0
     dynamic var speed : Double = 0.0
+    
+    convenience init(deg:Double , speed:Double) {
+         self.init()
+        self.deg = deg
+        self.speed = speed
+    }
     
     enum CodingKeys: String, CodingKey {
         case deg = "deg"
@@ -144,11 +151,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -181,11 +188,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+       super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init()
     }
     
     required init() {
@@ -209,11 +216,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -237,11 +244,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -257,9 +264,21 @@ import RealmSwift
     dynamic var pressure : Double = 0.0
     dynamic var seaLevel : Double = 0.0
     dynamic var temp : Double = 0.0
-    dynamic var tempKf : Double = 0
+    dynamic var tempKf : Double = 0.0
     dynamic var tempMax : Double = 0.0
     dynamic var tempMin : Double = 0.0
+    
+    convenience init( grndLevel : Double ,humidity : Int , pressure : Double , seaLevel : Double , temp : Double , tempKf : Double , tempMax : Double , tempMin : Double) {
+        self.init()
+        self.grndLevel = grndLevel
+        self.humidity = humidity
+        self.pressure = pressure
+        self.seaLevel = seaLevel
+        self.temp = temp
+        self.tempKf = tempKf
+        self.tempMin = tempMin
+        self.tempMax = tempMax
+    }
     
     enum CodingKeys: String, CodingKey {
         case grndLevel = "grnd_level"
@@ -286,11 +305,12 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init()
+        
     }
     
     required init() {
@@ -308,6 +328,11 @@ import RealmSwift
         case all = "all"
     }
     
+    convenience init( all : Int ) {
+        self.init()
+        self.all = all
+    }
+    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         all = try values.decode(Int.self, forKey: .all)
@@ -315,11 +340,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -367,11 +392,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {
@@ -389,6 +414,12 @@ import RealmSwift
         case lon = "lon"
     }
     
+    convenience init(lat : Double , lon : Double) {
+        self.init()
+        self.lat = lat
+        self.lon = lon
+    }
+    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         lat = try values.decode(Double.self, forKey: .lat)
@@ -397,11 +428,11 @@ import RealmSwift
     }
     
     required init(value: Any, schema: RLMSchema) {
-        fatalError("init(value:schema:) has not been implemented")
+        super.init(value: value, schema: schema)
     }
     
     required init(realm: RLMRealm, schema: RLMObjectSchema) {
-        fatalError("init(realm:schema:) has not been implemented")
+        super.init(realm: realm, schema: schema)
     }
     
     required init() {

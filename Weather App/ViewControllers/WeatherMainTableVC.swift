@@ -20,7 +20,8 @@ class WeatherMainTableVC: MainTableView {
         setUpViews()
         weatherTable.dataSource = self
         weatherTable.delegate = self
-        
+        self.mainTableViewCellVM.tableCellTypes.forEach({ $0.registerCell(tableView: self.weatherTable)})
+        weatherTable.reloadData()
     }
     
     init(isPresentedAsRootVC:Bool) {

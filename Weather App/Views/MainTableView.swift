@@ -27,8 +27,6 @@ class MainTableView: UIViewController {
         weatherTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         weatherTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         weatherTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        weatherTable.estimatedRowHeight = 180
         weatherTable.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        weatherTable.rowHeight = UITableView.automaticDimension
     }
 }

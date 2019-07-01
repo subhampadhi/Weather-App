@@ -104,5 +104,16 @@ class AppUtils {
     static func hideActivityIndicator() {
         print("Done Loading")
     }
+    
+    static func getFormattedDate(date:String) -> String {
+        
+        let myDateString = date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let myDate = dateFormatter.date(from: myDateString)!
+        dateFormatter.dateFormat = "MMM dd, YYYY"
+        let somedateString = dateFormatter.string(from: myDate)
+        return somedateString
+    }
 }
 

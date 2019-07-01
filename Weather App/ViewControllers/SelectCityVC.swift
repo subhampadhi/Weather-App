@@ -81,6 +81,7 @@ extension SelectCityVC {
             let vc = WeatherMainTableVC(isPresentedAsRootVC: false)
             guard let city = self.placeTextField.text else {return}
             Session.setCurrentCity(city: city)
+            print(Session.getCurrentCity())
             self.navigationController?.pushViewController(vc, animated: true)
             
         }

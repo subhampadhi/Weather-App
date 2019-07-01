@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         print(Session.getCurrentCity())
         if Session.getCurrentCity() != "" {
-          //  window?.rootViewController = UINavigationController(rootViewController: WeatherMainTableVC(isPresentedAsRootVC: true))
-            window?.rootViewController = UINavigationController(rootViewController: ViewController())
+            window?.rootViewController = UINavigationController(rootViewController: WeatherMainTableVC(isPresentedAsRootVC: true))
+           
         }else {
             window?.rootViewController = UINavigationController(rootViewController: SelectCityVC())
         }
