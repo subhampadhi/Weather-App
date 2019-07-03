@@ -71,7 +71,6 @@ import RealmSwift
     dynamic var dt : Int = 0 // ch
     dynamic var  dtTxt : String = "" //ch
     dynamic var main : ForecastMain? // ch
-   // dynamic var rain : ForecastRain?
     dynamic var sys : ForecastSy? //ch
     let weather = RealmSwift.List<ForecastWeather>() // ch
     dynamic var wind : ForecastWind? // ch
@@ -81,7 +80,6 @@ import RealmSwift
         case clouds = "clouds"
         case dtTxt = "dt_txt"
         case main = "main"
-      //  case rain = "rain"
         case sys = "sys"
         case weather = "weather"
         case wind = "wind"
